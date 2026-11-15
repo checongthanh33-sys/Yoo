@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nexus 🦁 Gaming Store</title>
+<style>
+:root{--bg:#0b0618;--p1:#7c3aed;--p2:#a855f7;--card:#150b2e;--line:#3b1d7a;--tx:#f3eaff;--mut:#a995d4;--gold:#fbbf24;--ok:#22c55e;--no:#ef4444}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Segoe UI",Roboto,Arial,sans-serif;background:radial-gradient(ellipse at top,#2a0f5e 0,var(--bg) 60%) fixed;color:var(--tx);min-height:100vh}
+button,input,select{font:inherit}
+button{cursor:pointer;border:0;color:#fff;background:linear-gradient(180deg,var(--p2),var(--p1));padding:9px 16px;border-radius:8px;font-weight:700}
+button:hover{filter:brightness(1.15)}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button.gold{background:linear-gradient(180deg,#fcd34d,#f59e0b);color:#2a1500}
+button.ok{background:var(--ok)}button.no{background:var(--no)}button.ghost{background:#2a1659;border:1px solid var(--line)}
+input,select{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:#0e0722;color:var(--tx);margin:6px 0}
+label{font-size:13px;color:var(--mut)}
+header{display:flex;align-items:center;gap:14px;padding:12px 20px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.logo{font-size:30px;font-weight:900;font-style:italic;letter-spacing:1px;background:linear-gradient(90deg,#fff,#c084fc);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo small{display:block;font-size:12px;letter-spacing:4px;color:var(--mut);-webkit-text-fill-color:var(--mut)}
+.slogan{color:var(--gold);font-style:italic;font-weight:700;flex:1;min-width:180px}
+.bal{border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-weight:800;color:var(--gold)}
+nav{display:flex;gap:4px;padding:8px 20px;overflow-x:auto;border-bottom:1px solid var(--line);background:#0e0722aa}
+nav a{padding:10px 16px;border-radius:10px;color:var(--tx);text-decoration:none;white-space:nowrap;font-weight:600;cursor:pointer}
+nav a.on{background:linear-gradient(180deg,var(--p2),var(--p1))}
+nav .zalo{margin-left:auto;background:#0b2a55;border:1px solid #38bdf8;font-weight:800}
+.hero{text-align:center;padding:46px 16px;background:linear-gradient(90deg,#3b0764aa,#1e1b4baa,#3b0764aa)}
+.hero h1{font-size:clamp(38px,8vw,76px);font-style:italic;font-weight:900;line-height:1;background:linear-gradient(180deg,#fff,#c084fc);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h2{font-size:clamp(26px,5vw,48px);font-style:italic;color:#c084fc}
+.hero p{margin-top:10px;color:var(--mut);letter-spacing:3px}
+.hero .pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.pills span{border:1px solid var(--line);border-radius:999px;padding:6px 14px;background:#150b2e}
+main{max-width:1180px;margin:18px auto;padding:0 16px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:18px}
+.panel h3{margin-bottom:12px;font-size:19px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.bag{background:linear-gradient(160deg,#27105a,#120a2a);border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center}
+.bag .emo{font-size:54px}
+.bag b{display:block;font-size:20px;margin:4px 0}
+.bag .pr{font-size:26px;font-weight:900;color:var(--gold);margin-bottom:8px}
+.bag ul{list-style:none;text-align:left;font-size:13px;color:var(--mut);margin-bottom:12px}
+.bag li:before{content:"✔ ";color:var(--ok)}
+.bag.lq{background:linear-gradient(160deg,#4a2a05,#1a0f2e)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:720px){.cols{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--mut);font-weight:600}
+.badge{padding:2px 10px;border-radius:999px;font-size:12px;font-weight:700}
+.b-wait{background:#78350f;color:#fcd34d}.b-ok{background:#14532d;color:#86efac}.b-no{background:#7f1d1d;color:#fca5a5}
+.plus{color:var(--ok);font-weight:700}.minus{color:var(--no);font-weight:700}
+.modal{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;padding:16px;z-index:9}
+.modal.show{display:flex}
+.box{background:var(--card);border:1px solid var(--p2);border-radius:16px;padding:22px;width:100%;max-width:400px}
+.tabs{display:flex;gap:8px;margin-bottom:10px}
+.prize{font-size:22px;color:var(--gold);font-weight:800;text-align:center;margin:12px 0}
+.empty{color:var(--mut);text-align:center;padding:22px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#1e0b44;border:1px solid var(--p2);padding:12px 20px;border-radius:10px;z-index:20;display:none;max-width:92vw}
+footer{text-align:center;color:var(--mut);padding:24px;font-size:13px}
+.hide{display:none!important}
+.hero{position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 2fr 1fr;align-items:center;padding:34px 16px;background:radial-gradient(circle at 20% 50%,#6d28d9aa,transparent 45%),radial-gradient(circle at 80% 50%,#b4780caa,transparent 45%),#12072b}
+.side{font-size:clamp(20px,4vw,40px);font-weight:900;font-style:italic;line-height:1.1;text-shadow:0 0 22px currentColor}
+.side .big{font-size:clamp(60px,10vw,120px);display:block;font-style:normal}
+.side.l{color:#c4b5fd;text-align:left}.side.r{color:var(--gold);text-align:right}
+@media(max-width:720px){.hero{grid-template-columns:1fr}.side{display:none}}
+.home3{display:grid;grid-template-columns:230px 1fr 280px;gap:16px;align-items:start}
+@media(max-width:1000px){.home3{grid-template-columns:1fr}}
+.cat a{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:8px;cursor:pointer;font-weight:600}
+.cat a:hover,.cat a.on{background:linear-gradient(90deg,var(--p1),#4c1d95)}
+.cat a span{font-size:20px;width:26px;text-align:center}
+.help{margin-top:14px;border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;background:#0e0722}
+.help b{display:block;font-size:22px;color:#7dd3fc;margin:4px 0}
+.art{height:92px;border-radius:10px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;font-style:italic;letter-spacing:1px;background:radial-gradient(circle at 30% 30%,#e11d48aa,transparent 55%),radial-gradient(circle at 75% 70%,#7c3aedcc,transparent 55%),#1b0a3d}
+.bag.lq .art{background:radial-gradient(circle at 30% 30%,#f59e0baa,transparent 55%),radial-gradient(circle at 75% 70%,#7c3aedcc,transparent 55%),#1b0a3d}
+.ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.ph a{color:#c4b5fd;cursor:pointer;text-decoration:underline;font-size:14px}
+.svc{border-top:1px solid var(--line);padding:14px 0}
+.svc:first-child{border:0;padding-top:0}
+.svc h4{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.trust{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;max-width:1180px;margin:0 auto 18px;padding:0 16px}
+.trust div{display:flex;align-items:center;gap:12px;border:1px solid var(--line);background:linear-gradient(90deg,#1e0b44,#150b2e);border-radius:12px;padding:14px 18px;font-weight:700}
+.trust span{font-size:32px}
+.fl{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:8px}.fl a{color:var(--tx);font-size:12px;cursor:pointer}
+@media(prefers-reduced-motion:no-preference){.pop{animation:pop .5s}@keyframes pop{from{transform:scale(.4);opacity:0}}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">NEXUS 🦁<small>GAMING STORE</small></div>
+  <div class="slogan">SHOP ACC GAME UY TÍN<br>NẠP THẺ - NẠP GAME GIÁ RẺ</div>
+  <div id="userbox"></div>
+</header>
+
+<nav id="nav">
+  <a data-v="home">🏠 Trang chủ</a>
+  <a data-v="shop">🛒 Túi mù</a>
+  <a data-v="card">💳 Nạp thẻ</a>
+  <a data-v="game">💎 Nạp game</a>
+  <a data-v="wallet">👛 Ví của tôi</a>
+  <a data-v="history">🕘 Lịch sử</a>
+  <a data-v="admin" id="navAdmin" class="hide">⚙️ Admin</a>
+  <a class="zalo" href="https://zalo.me/0933454413" target="_blank" rel="noopener">Zalo 0933454413</a>
+</nav>
+
+<section class="hero">
+  <div class="side l"><span class="big">🥷</span>FREE FIRE</div>
+  <div style="text-align:center"><div style="font-size:30px">👑</div><h1>NEXUS</h1><h2>GAMING STORE</h2>
+  <p>NEXT LEVEL GAMING EXPERIENCE</p>
+  <div class="pills"><span>🛡️ An Toàn Bảo Mật</span><span>⚡ Giao Dịch Nhanh Chóng</span><span>🎧 Hỗ Trợ 24/7</span></div></div>
+  <div class="side r"><span class="big">🗡️</span>LIÊN QUÂN<br><small style="font-size:14px;letter-spacing:3px">ARENA OF VALOR</small></div>
+</section>
+
+<main id="view"></main>
+<div class="trust">
+  <div><span>🛡️</span>Cam Kết<br>Uy Tín 100%</div><div><span>🚀</span>Giao Dịch<br>Siêu Tốc</div>
+  <div><span>🎁</span>Nhiều Ưu Đãi<br>Hấp Dẫn</div><div><span>🎧</span>Hỗ Trợ 24/7<br>Qua Zalo</div>
+</div>
+<footer>© 2026 Nexus 🦁 Gaming Store. All rights reserved.
+  <div class="fl"><a>Điều Khoản</a><a>Chính Sách Bảo Mật</a><a href="https://zalo.me/0933454413" target="_blank" rel="noopener">Liên Hệ: 0933454413</a></div></footer>
+
+<!-- Đăng nhập / Đăng ký -->
+<div class="modal" id="authModal"><div class="box">
+  <div class="tabs"><button id="tabLogin">Đăng nhập</button><button class="ghost" id="tabReg">Đăng ký</button></div>
+  <label>Email</label><input id="aEmail" type="email" placeholder="email@gmail.com">
+  <label>Mật khẩu</label><input id="aPass" type="password" placeholder="Mật khẩu">
+  <div id="regExtra" class="hide"><label>Tên hiển thị</label><input id="aName" placeholder="Tên của bạn"></div>
+  <button id="aGo" style="width:100%;margin-top:8px">Đăng nhập</button>
+  <button class="ghost" style="width:100%;margin-top:8px" onclick="closeModal('authModal')">Đóng</button>
+</div></div>
+
+<!-- Kết quả mở túi mù -->
+<div class="modal" id="bagModal"><div class="box" style="text-align:center">
+  <div style="font-size:70px" class="pop" id="bagEmo">🎁</div>
+  <div class="prize" id="bagPrize"></div>
+  <p id="bagNote" style="color:var(--mut);font-size:14px"></p>
+  <button style="margin-top:14px" onclick="closeModal('bagModal')">Tuyệt vời!</button>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ====== DỮ LIỆU (lưu trong trình duyệt - localStorage) ====== */
+const ADMIN_EMAIL="checongthanh33@gmail.com", ADMIN_PASS="111111", ADMIN_BAL=999000000000;
+const KEY="nexus_db_v1";
+const PRICES=[49000,99000,299000,999000];
+const BAGS={
+  ff:{name:"Túi mù Free Fire",emo:"🔥",cls:"",prizes:{
+    49000:["Acc skin cơ bản","Acc 20 trang phục","Acc rank Bạc"],
+    99000:["Acc skin đẹp","Acc có súng nâng cấp","Acc rank Vàng"],
+    299000:["Acc nhiều skin hiếm","Acc rank Kim Cương","Acc đồ Bậc Thầy"],
+    999000:["Acc VIP skin Huyền Thoại","Acc rank Cao Thủ","Acc full skin súng tiến hóa"]}},
+  lq:{name:"Túi mù Liên Quân",emo:"⚔️",cls:"lq",prizes:{
+    49000:["Acc 15 tướng","Acc 20 trang phục","Acc rank Bạc"],
+    99000:["Acc 30 tướng","Acc có skin SS","Acc rank Vàng"],
+    299000:["Acc 60 tướng, nhiều skin hiếm","Acc rank Kim Cương","Acc đủ ngọc"],
+    999000:["Acc VIP full tướng","Acc rank Cao Thủ","Acc skin SS+ hiếm"]}}
+};
+const GAMES={
+  ff:{name:"Kim cương Free Fire",packs:[["100 kim cương",20000],["310 kim cương",60000],["520 kim cương",100000],["1060 kim cương",200000]]},
+  lq:{name:"Quân huy Liên Quân",packs:[["40 quân huy",20000],["100 quân huy",50000],["210 quân huy",100000],["430 quân huy",200000]]}
+};
+const VALS=[10000,20000,50000,100000,200000,500000];
+let presel="Garena";
+let db=load(), me=localStorage.getItem("nexus_me")||null, cur="home";
+
+function load(){
+  let d; try{d=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+  if(!d) d={users:{},cards:[],tx:[]};
+  d.users[ADMIN_EMAIL]={pass:ADMIN_PASS,name:"Admin",bal:d.users[ADMIN_EMAIL]?d.users[ADMIN_EMAIL].bal:ADMIN_BAL,admin:true};
+  return d;
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){}}
+const $=s=>document.querySelector(s);
+const money=n=>n.toLocaleString("vi-VN")+"đ";
+const user=()=>me&&db.users[me];
+const isAdmin=()=>user()&&user().admin;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const when=t=>new Date(t).toLocaleString("vi-VN");
+function toast(m){const t=$("#toast");t.textContent=m;t.style.display="block";clearTimeout(toast.h);toast.h=setTimeout(()=>t.style.display="none",3200)}
+function openModal(id){$("#"+id).classList.add("show")}
+function closeModal(id){$("#"+id).classList.remove("show")}
+function addTx(email,type,desc,amt){db.tx.unshift({id:Date.now()+Math.random(),email,type,desc,amt,t:Date.now()});save()}
+function need(){if(!user()){toast("Vui lòng đăng nhập trước");openModal("authModal");return false}return true}
+
+/* ====== ĐĂNG NHẬP ====== */
+let mode="login";
+function setMode(m){mode=m;$("#regExtra").classList.toggle("hide",m!=="reg");$("#aGo").textContent=m==="reg"?"Tạo tài khoản":"Đăng nhập";
+  $("#tabLogin").className=m==="login"?"":"ghost";$("#tabReg").className=m==="reg"?"":"ghost"}
+$("#tabLogin").onclick=()=>setMode("login");$("#tabReg").onclick=()=>setMode("reg");
+$("#aGo").onclick=()=>{
+  const e=$("#aEmail").value.trim().toLowerCase(),p=$("#aPass").value;
+  if(!e||!p) return toast("Nhập đủ email và mật khẩu");
+  if(mode==="reg"){
+    if(db.users[e]) return toast("Email đã được đăng ký");
+    if(p.length<6) return toast("Mật khẩu tối thiểu 6 ký tự");
+    db.users[e]={pass:p,name:$("#aName").value.trim()||e.split("@")[0],bal:0};save();
+  } else if(!db.users[e]||db.users[e].pass!==p) return toast("Sai email hoặc mật khẩu");
+  me=e;localStorage.setItem("nexus_me",me);closeModal("authModal");
+  $("#aPass").value="";toast("Xin chào "+db.users[e].name);render();
+};
+function logout(){me=null;localStorage.removeItem("nexus_me");go("home")}
+
+/* ====== ĐIỀU HƯỚNG ====== */
+$("#nav").onclick=e=>{const v=e.target.dataset.v;if(v)go(v)};
+function go(v){
+  if((v==="wallet"||v==="history")&&!need()) return;
+  if(v==="admin"&&!isAdmin()) return toast("Chỉ admin mới vào được");
+  cur=v;render();scrollTo(0,0);
+}
+
+function render(){
+  const u=user();
+  $("#userbox").innerHTML=u
+    ?`<span style="margin-right:10px">👤 Tài khoản: ${esc(u.name)}</span><span class="bal">🪙 Số dư: ${money(u.bal)}</span> <button class="ghost" onclick="logout()">Đăng xuất</button>`
+    :`<span class="bal">🪙 Số dư: 0đ</span> <button onclick="openModal('authModal')">Đăng nhập</button>`;
+  $("#navAdmin").classList.toggle("hide",!isAdmin());
+  document.querySelectorAll("#nav a[data-v]").forEach(a=>a.classList.toggle("on",a.dataset.v===cur));
+  $("#view").innerHTML=({home:vHome,shop:vShop,card:vCard,game:vGame,wallet:vWallet,history:vHistory,admin:vAdmin})[cur]();
+}
+
+/* ====== TÚI MÙ ====== */
+function bagCards(k){
+  const b=BAGS[k];
+  return `<div class="grid">${PRICES.map(p=>`<div class="bag ${b.cls}"><div class="art">${k==="ff"?"FREE FIRE":"LIÊN QUÂN"}</div><b>ACC ${k==="ff"?"FREE FIRE":"LIÊN QUÂN"}</b><div class="pr">${money(p)}</div>
+  <ul><li>Mở ngẫu nhiên 1 acc</li><li>Giá trị acc ≥ giá túi</li><li>Bảo hành uy tín</li></ul>
+  <button class="gold" style="width:100%" onclick="buyBag('${k}',${p})">MỞ TÚI NGAY</button></div>`).join("")}</div>`;
+}
+function buyBag(k,p){
+  if(!need()) return;
+  const u=user(); if(u.bal<p) return toast("Số dư không đủ. Vui lòng nạp thẻ.");
+  u.bal-=p;
+  const list=BAGS[k].prizes[p],prize=list[Math.floor(Math.random()*list.length)];
+  addTx(me,"bag",`${BAGS[k].name} ${money(p)} → ${prize}`,-p);save();
+  $("#bagEmo").textContent=BAGS[k].emo;$("#bagPrize").textContent=prize;
+  $("#bagNote").textContent="Nhắn Zalo 0933454413 kèm email tài khoản để nhận thông tin acc.";
+  openModal("bagModal");render();
+}
+function vShop(){return `<div class="panel"><h3>🔥 Túi mù Free Fire</h3>${bagCards("ff")}</div><div class="panel"><h3>⚔️ Túi mù Liên Quân</h3>${bagCards("lq")}</div>`}
+function quickGame(k,label,ico,cls){
+  return `<div class="svc"><h4>${ico} ${label}</h4>
+  <input id="gid_${k}" placeholder="Nhập ID của bạn...">
+  <select id="gp_${k}">${GAMES[k].packs.map((p,i)=>`<option value="${i}">${p[0]} - ${money(p[1])}</option>`).join("")}</select>
+  <button class="${cls}" style="width:100%" onclick="topGame('${k}')">NẠP NGAY ›</button></div>`;
+}
+function toCard(t){presel=t;go("card")}
+function vHome(){
+  return `<div class="home3">
+  <aside><div class="panel cat" style="padding:10px"><h3 style="padding:6px 10px">▦ DANH MỤC DỊCH VỤ</h3>
+    <a class="on" onclick="go('shop')"><span>🛒</span>Mua Acc Free Fire</a>
+    <a onclick="toCard('Mobifone')"><span>📱</span>Nạp Thẻ Mobifone</a>
+    <a onclick="toCard('Garena')"><span>🎮</span>Nạp Thẻ Garena</a>
+    <a onclick="go('game')"><span>💎</span>Nạp Kim Cương FF</a>
+    <a onclick="go('game')"><span>🛡️</span>Nạp Quân Huy LQ</a>
+    <a onclick="toCard('Garena')"><span>👛</span>Nạp Tiền Vào Ví</a></div>
+    <div class="help"><div style="font-weight:800">HỖ TRỢ NHANH</div><b>0933454413</b><small style="color:var(--mut)">Chat Zalo ngay để được hỗ trợ!</small></div>
+  </aside>
+  <div>
+    <div class="panel"><div class="ph"><h3 style="margin:0">🛒 SHOP ACC FREE FIRE</h3><a onclick="go('shop')">Xem tất cả →</a></div>${bagCards("ff")}</div>
+    <div class="panel"><div class="ph"><h3 style="margin:0">⚔️ SHOP ACC LIÊN QUÂN</h3><a onclick="go('shop')">Xem tất cả →</a></div>${bagCards("lq")}</div>
+  </div>
+  <aside class="panel"><h3>💎 NẠP GAME</h3>
+    ${quickGame("ff","NẠP KIM CƯƠNG FREE FIRE","💎","")}
+    ${quickGame("lq","NẠP QUÂN HUY LIÊN QUÂN","🛡️","gold")}
+    <div class="svc"><h4>💳 NẠP THẺ CÀO</h4>
+      <select id="hTelco"><option>Garena</option><option>Mobifone</option></select>
+      <button style="width:100%" onclick="toCard($('#hTelco').value)">NẠP NGAY ›</button>
+      <p style="margin-top:10px;font-weight:800"><span style="color:#38bdf8">mobifone</span> &nbsp; <span style="color:#f97316">Garena</span></p></div>
+  </aside></div>`;
+}
+
+/* ====== NẠP THẺ ====== */
+function vCard(){
+  return `<div class="cols"><div class="panel"><h3>💳 Gửi thẻ cào</h3>
+  <label>Loại thẻ</label><select id="cTelco"><option ${presel==="Garena"?"selected":""}>Garena</option><option ${presel==="Mobifone"?"selected":""}>Mobifone</option></select>
+  <label>Mệnh giá</label><select id="cVal">${VALS.map(v=>`<option value="${v}">${money(v)}</option>`).join("")}</select>
+  <label>Số serial</label><input id="cSerial" inputmode="numeric" placeholder="Nhập serial">
+  <label>Mã thẻ</label><input id="cCode" inputmode="numeric" placeholder="Nhập mã thẻ">
+  <button style="width:100%;margin-top:8px" onclick="sendCard()">GỬI THẺ</button>
+  <p style="color:var(--mut);font-size:13px;margin-top:10px">Sai mệnh giá hoặc thẻ lỗi sẽ bị từ chối. Cần hỗ trợ: Zalo 0933454413.</p></div>
+  <div class="panel"><h3>Thẻ đã gửi</h3>${cardTable(db.cards.filter(c=>c.email===me),false)}</div></div>`;
+}
+function sendCard(){
+  if(!need()) return;
+  const s=$("#cSerial").value.trim(),c=$("#cCode").value.trim();
+  if(s.length<8||c.length<8) return toast("Serial hoặc mã thẻ chưa đúng");
+  db.cards.unshift({id:Date.now(),email:me,telco:$("#cTelco").value,val:+$("#cVal").value,serial:s,code:c,status:"wait",t:Date.now()});save();
+  toast("Đã gửi thẻ, vui lòng chờ admin duyệt");render();
+}
+function cardTable(list,adm){
+  if(!list.length) return `<div class="empty">Chưa có thẻ nào</div>`;
+  const st={wait:["Chờ duyệt","b-wait"],ok:["Đã duyệt","b-ok"],no:["Từ chối","b-no"]};
+  return `<div style="overflow-x:auto"><table><tr><th>Thời gian</th>${adm?"<th>Khách</th>":""}<th>Thẻ</th>${adm?"<th>Serial / Mã thẻ</th>":""}<th>Trạng thái</th>${adm?"<th></th>":""}</tr>
+  ${list.map(c=>`<tr><td>${when(c.t)}</td>${adm?`<td>${esc(c.email)}</td>`:""}<td>${c.telco}<br>${money(c.val)}</td>
+  ${adm?`<td>${esc(c.serial)}<br><b>${esc(c.code)}</b></td>`:""}<td><span class="badge ${st[c.status][1]}">${st[c.status][0]}</span></td>
+  ${adm?`<td>${c.status==="wait"?`<button class="ok" onclick=
+</script>
+</body>
+</html>
